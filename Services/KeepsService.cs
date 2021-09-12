@@ -8,10 +8,13 @@ namespace Keepr.Services
   public class KeepsService
   {
     private readonly KeepsRepository _keepRepo;
+     private readonly VaultsRepository _vaultRepo;
 
-    public KeepsService(KeepsRepository keepRepo)
+
+    public KeepsService(KeepsRepository keepRepo, VaultsRepository vaultRepo)
     {
       _keepRepo = keepRepo;
+      _vaultRepo = vaultRepo;
     }
 
 //GetAll
@@ -54,9 +57,9 @@ namespace Keepr.Services
       _keepRepo.Delete(keepId);
     }
 
-    // internal List<VaultKeepsExtended> GetKeepsForAccount(string id)
-    // {
-    //   return _keepRepo.GetByAccountId(id);
-    // }
-  }
+        internal IEnumerable<VaultKeepViewModel> GetKeepByVaultId(int id)
+        {
+            return _keepRepo.GetKeepByVaultId(id);
+        }
+        }
 }

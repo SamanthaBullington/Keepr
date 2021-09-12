@@ -15,11 +15,13 @@ namespace Keepr.Controllers
   {
     private readonly VaultsService _vs;
     private readonly AccountService _acts;
+    private readonly KeepsService _ks;
 
-    public VaultsController(VaultsService vs, AccountService acts)
+    public VaultsController(VaultsService vs, AccountService acts, KeepsService ks)
     {
       _vs = vs;
       _acts = acts;
+      _ks = ks;
     }
 
         [HttpGet]
@@ -50,6 +52,20 @@ namespace Keepr.Controllers
       }
     }
 
+    
+        [HttpGet("{id}/keeps")]  // NOTE '{}' signifies a var parameter
+        public ActionResult<IEnumerable<VaultKeepViewModel>> GetKeepByVaultId(int id)
+        {
+            try
+            {
+                return Ok(_ks.GetKeepByVaultId(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     [HttpPost]
     [Authorize]
     public async Task<ActionResult<Vault>> Create([FromBody] Vault newVault)
@@ -62,6 +78,7 @@ namespace Keepr.Controllers
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
         // NEVER EVER TRUST THE CLIENT
         newVault.CreatorId = userInfo.Id;
+        newVault.Creator = userInfo;
         Vault vault = _vs.CreateVault(newVault);
         return Ok(vault);
 
@@ -80,6 +97,7 @@ namespace Keepr.Controllers
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
         updatedVault.CreatorId = userInfo.Id;
+        updatedVault.Creator = userInfo;
         updatedVault.Id = id;
         Vault vault = _vs.Edit(updatedVault);
         return Ok(vault);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Keepr.Models;
 using Keepr.Repositories;
 
@@ -6,9 +7,11 @@ namespace Keepr.Services
     public class AccountService
     {
         private readonly AccountsRepository _repo;
-        public AccountService(AccountsRepository repo)
+          private readonly KeepsRepository _keepsRepo;
+        public AccountService(AccountsRepository repo, KeepsRepository keepsRepo)
         {
             _repo = repo;
+            _keepsRepo = keepsRepo;
         }
 
         internal string GetProfileEmailById(string id)
@@ -36,5 +39,10 @@ namespace Keepr.Services
             original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
             return _repo.Edit(original);
         }
+
+         internal List<VaultKeepViewModel> GetKeeps(string id)
+    {
+      return _keepsRepo.GetAllByAccountId(id);
+    }
     }
 }

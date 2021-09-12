@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using Keepr.Models;
@@ -15,10 +14,14 @@ namespace Keepr.Controllers
   public class VaultKeepsController : ControllerBase
   {
     private readonly VaultKeepsService _vks;
+    private readonly KeepsService _ks;
+    private readonly VaultsService _vs;
 
-    public VaultKeepsController(VaultKeepsService vks)
+    public VaultKeepsController(VaultKeepsService vks, VaultsService vs, KeepsService ks)
     {
       _vks = vks;
+      _vs = vs;
+      _ks = ks;
     }
 
 //  [HttpGet]
@@ -52,6 +55,7 @@ namespace Keepr.Controllers
 
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<VaultKeep>> Create([FromBody] VaultKeep newVaultKeep)
     {
       try
@@ -68,7 +72,6 @@ namespace Keepr.Controllers
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
     public async Task<ActionResult<String>> Delete(int id)
     {
       try

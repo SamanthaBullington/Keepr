@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -68,16 +67,16 @@ namespace Keepr.Repositories
     //   }, new { accountId }, splitOn: "id").ToList();
     // }
 
-    internal VaultKeep Create(VaultKeep data)
+    internal VaultKeep Create(VaultKeep newVaultKeep)
     {
       string sql = @"
             INSERT INTO vaultkeeps(vaultId, keepId, creatorId)
             VALUES(@VaultId, @KeepId, @CreatorId);
             SELECT LAST_INSERT_ID();
             ";
-      var id = _db.ExecuteScalar<int>(sql, data);
-      data.Id = id;
-      return data;
+      var id = _db.ExecuteScalar<int>(sql, newVaultKeep);
+      newVaultKeep.Id = id;
+      return newVaultKeep;
     }
 
     internal VaultKeep GetById(int id)

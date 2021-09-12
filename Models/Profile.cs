@@ -6,8 +6,4 @@ namespace Keepr.Models
     public string Name { get; set; }
     public string Picture { get; set; }
   }
-     public class VaultKeepProfileViewModel : Profile
-  {
-    public int VaultKeepId { get; set; }
-  }
 }

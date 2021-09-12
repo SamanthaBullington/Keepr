@@ -38,20 +38,21 @@ namespace Keepr.Controllers
             }
         }
 
-    //     [HttpGet("keeps")]
-    // public async Task<ActionResult<List<VaultKeepsExtended>>> GetKeeps()
-    // {
-    //   try
-    //   {
-    //     Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-    //     List<VaultKeepsExtended> keeps = _ks.GetKeepsForAccount(userInfo.Id);
-    //     return Ok(keeps);
-    //   }
-    //   catch (Exception e)
-    //   {
-    //     return BadRequest(e.Message);
-    //   }
-    // }
+    [HttpGet("keeps")]
+    [Authorize]
+    public async Task<ActionResult<Account>> GetKeeps()
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        List<VaultKeepViewModel> keeps = _accountService.GetKeeps(userInfo.Id);
+        return Ok(keeps);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
     }
 
 
