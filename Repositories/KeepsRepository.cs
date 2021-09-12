@@ -49,6 +49,25 @@ namespace Keepr.Repositories
         }, new { id }).FirstOrDefault();
     }
 
+    // internal List<VaultKeepsExtended> GetByAccountId(string accountId)
+    // {
+    //   string sql = @"
+    //   SELECT
+    //     a.*,
+    //     k.*,
+    //     vk.id AS vaultKeepId
+    //   FROM vaultkeeps vk
+    //   JOIN keeps k ON vk.keepId = k.id
+    //   JOIN accounts a ON k.creatorId = a.id
+    //   WHERE vk.accountId = @accountId;
+    //   ";
+    //   return _db.Query<Profile, VaultKeepsExtended, VaultKeepsExtended>(sql, (prof, vke) =>
+    //   {
+    //     vke.Creator = prof;
+    //     return vke;
+    //   }, new { accountId }, splitOn: "id").ToList();
+    // }
+
     public Keep Create(Keep newKeep)
     {
       var sql = @"
@@ -67,7 +86,10 @@ namespace Keepr.Repositories
       SET
         name = @Name,
         description = @Description,
-        img = @Img
+        img = @Img,
+        keeps = @Keeps,
+        views = @Views,
+        shares = @Shares
       WHERE id = @Id
       ;";
       _db.Execute(sql, updatedKeep);

@@ -53,5 +53,10 @@ namespace Keepr.Services
       }
       _keepRepo.Delete(keepId);
     }
+
+    // internal List<VaultKeepsExtended> GetKeepsForAccount(string id)
+    // {
+    //   return _keepRepo.GetByAccountId(id);
+    // }
   }
 }
