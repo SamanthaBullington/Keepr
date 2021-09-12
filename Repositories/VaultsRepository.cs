@@ -23,7 +23,7 @@ namespace Keepr.Repositories
                     a.*
                 FROM vaults v
                 JOIN accounts a ON v.creatorId = a.id;
-            ";
+                WHERE v.isPrivate = false;";
       return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
       {
         v.Creator = p;
@@ -46,7 +46,7 @@ namespace Keepr.Repositories
         {
           v.Creator = p;
           return v;
-        }, new { id }).FirstOrDefault();
+        }, new { id }, splitOn:"id").FirstOrDefault();
     }
 
     public Vault Create(Vault newVault)
