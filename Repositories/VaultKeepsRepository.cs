@@ -74,9 +74,8 @@ namespace Keepr.Repositories
             VALUES(@VaultId, @KeepId, @CreatorId);
             SELECT LAST_INSERT_ID();
             ";
-      var id = _db.ExecuteScalar<int>(sql, newVaultKeep);
-      newVaultKeep.Id = id;
-      return newVaultKeep;
+      newVaultKeep.Id = _db.ExecuteScalar<int>(sql, newVaultKeep);
+      return GetById(newVaultKeep.Id);
     }
 
     internal VaultKeep GetById(int id)

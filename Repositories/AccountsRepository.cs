@@ -13,19 +13,6 @@ namespace Keepr.Repositories
             _db = db;
         }
 
-    //     internal List<VaultKeepsExtended> GetVaultKeeps(int keepId)
-    // {
-    //   string sql = @"
-    //   SELECT
-    //     a.*,
-    //     vk.id AS vaultKeepId
-    //   FROM vaultkeeps vk
-    //   JOIN accounts a ON vk.accountId = a.id
-    //   WHERE vk.keepId = @keepId;
-    //   ";
-    //   return _db.Query<VaultKeepsExtended>(sql, new { keepId }).ToList();
-    // }
-
         internal Account GetByEmail(string userEmail)
         {
             string sql = "SELECT * FROM accounts WHERE email = @userEmail";

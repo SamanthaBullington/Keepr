@@ -27,6 +27,13 @@ namespace Keepr.Services
     {
       return _keepRepo.GetById(id);
     }
+
+//GetKeepsByProfileId
+      internal List<Keep> GetKeepsByProfileId(string accountId)
+        {
+       return _keepRepo.GetKeepsByProfileId(accountId);
+        }
+    //create
     internal Keep CreateKeep(Keep newKeep)
     {
       return _keepRepo.Create(newKeep);
@@ -57,7 +64,7 @@ namespace Keepr.Services
       _keepRepo.Delete(keepId);
     }
 
-        internal IEnumerable<VaultKeepViewModel> GetKeepByVaultId(int id)
+        internal IEnumerable<Keep> GetKeepByVaultId(int id)
         {
             return _keepRepo.GetKeepByVaultId(id);
         }

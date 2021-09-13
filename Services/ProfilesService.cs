@@ -4,12 +4,14 @@ using Keepr.Repositories;
 
 namespace Keepr.Services
 {
-    public class ProfilesService
+  public class ProfilesService
     {
         private readonly ProfilesRepository _repo;
-        public ProfilesService(ProfilesRepository repo)
+        private readonly KeepsRepository _keepsRepo;
+        public ProfilesService(ProfilesRepository repo, KeepsRepository keepsRepo)
         {
             _repo = repo;
+            _keepsRepo = keepsRepo;
         }
         internal Profile GetOrCreateProfile(Profile userInfo)
         {
@@ -30,6 +32,5 @@ namespace Keepr.Services
             }
             return profile;
         }
-
-    }
+  }
 }

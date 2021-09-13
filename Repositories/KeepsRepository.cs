@@ -48,32 +48,50 @@ namespace Keepr.Repositories
           return k;
         }, new { id }).FirstOrDefault();
     }
-   internal List<VaultKeepViewModel> GetAllByAccountId(string accountId)
+
+        // internal List<Keep> GetKeepsByProfileId(int id)
+        // {
+        //     string sql = @"SELECT 
+        //     k.*,
+        //     keep.id AS KeepId
+        //     FROM keeps k
+        //     JOIN doctors d ON d.id = k.doctorId
+        //     WHERE accountId = @id;";
+        //     return _db.Query<Keep>(sql, new { id }).ToList();
+        // }
+
+    internal List<Keep> GetKeepsByProfileId(string accountId)
     {
       string sql = @"
       SELECT 
-        k.*,
-        v.*
+      a.*,
+      k.*
       FROM keeps k
-      JOIN vaults v ON k.vaultId = v.id
+      JOIN accounts a ON k.creatorid = a.id
       WHERE k.creatorId = @accountId;";
-      return _db.Query<VaultKeepViewModel, Vault, VaultKeepViewModel>(sql, (keep, vault) =>
+      return _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
       {
-        keep.VaultKeepId = vault.Id;
+        keep.Creator = account;
         return keep;
       }, new { accountId }, splitOn: "id").ToList();
     }
 
-       internal IEnumerable<VaultKeepViewModel> GetKeepByVaultId(int id)
+       internal IEnumerable<Keep> GetKeepByVaultId(int id)
         {
-            string sql = @"SELECT 
+            string sql = @"SELECT
+            a.*, 
             k.*,
             vk.id AS VaultKeepId
             FROM vaultkeeps vk
-            JOIN keeps k ON k.id = vk.keepId
-            WHERE vaultId = @id;";
-            return _db.Query<VaultKeepViewModel>(sql, new { id });
-        }
+            JOIN keeps k ON vk.keepId = k.id
+            JOIN accounts a ON k.creatorId = a.id
+            WHERE vaultId = @id";
+            return _db.Query<Profile, Keep, Keep>(sql, (p, vkvm) =>
+        {
+           vkvm.Creator = p;
+          return vkvm;
+        }, new { id },splitOn:"id");
+    }
 
     public Keep Create(Keep newKeep)
     {

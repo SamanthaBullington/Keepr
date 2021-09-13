@@ -15,14 +15,14 @@ namespace Keepr.Repositories
 
         internal Profile GetById(string id)
         {
-            string sql = "SELECT * FROM profiles WHERE id = @id";
+            string sql = "SELECT * FROM accounts WHERE id = @id";
             return _db.QueryFirstOrDefault<Profile>(sql, new { id });
         }
 
         internal Profile Create(Profile newProfile)
         {
             string sql = @"
-            INSERT INTO profiles
+            INSERT INTO accounts
               (name, picture, email, id)
             VALUES
               (@Name, @Picture, @Email, @Id)";
@@ -33,7 +33,7 @@ namespace Keepr.Repositories
         internal Profile Edit(Profile update)
         {
             string sql = @"
-            UPDATE profiles
+            UPDATE accounts
             SET 
               name = @Name,
               picture = @Picture

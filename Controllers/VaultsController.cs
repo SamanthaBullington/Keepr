@@ -53,7 +53,7 @@ namespace Keepr.Controllers
     }
 
     
-        [HttpGet("{id}/keeps")]  // NOTE '{}' signifies a var parameter
+        [HttpGet("{id}/keeps")]
         public ActionResult<IEnumerable<VaultKeepViewModel>> GetKeepByVaultId(int id)
         {
             try
