@@ -54,7 +54,7 @@ namespace Keepr.Controllers
 
     
         [HttpGet("{id}/keeps")]
-        public ActionResult<IEnumerable<VaultKeepViewModel>> GetKeepByVaultId(int id)
+        public ActionResult<List<VaultKeepViewModel>> GetKeepByVaultId(int id)
         {
             try
             {

@@ -14,59 +14,6 @@ namespace Keepr.Repositories
       _db = db;
     }
 
-    //     public List<VaultKeep> GetAll()
-    // {
-    //   string sql = @"
-    //   SELECT
-    //    a.*,
-    //    vk.*
-    //   FROM vaultkeeps vk
-    //   JOIN accounts a ON a.id = vk.creatorId
-    //   ;";
-    //   return _db.Query<Profile, VaultKeep, VaultKeep>(sql, (prof, vaultkeep) =>
-    //   {
-    //     vaultkeep.Creator = prof;
-    //     return vaultkeep;
-    //   }, splitOn: "id").ToList();
-    // }
-
-    // internal List<VaultKeep> GetAll(int vaultId)
-    // {
-    //   string sql = @"
-    //   SELECT 
-    //     a.*,
-    //     vk.*
-    //   FROM vaultkeeps vk
-    //   JOIN accounts a ON a.id = vk.creatorId
-    //   WHERE vk.vaultId = @vaultId;";
-    //   return _db.Query<Profile, VaultKeep, VaultKeep>(sql, (prof, vaultkeep) =>
-    //   {
-    //     vaultkeep.Creator = prof;
-    //     return vaultkeep;
-    //   }, new { vaultId }, splitOn: "id").ToList();
-    // }
-
-    //   internal List<VaultKeep> GetAllByAccountId(string accountId)
-    // {
-    //   string sql = @"
-    //   SELECT 
-    //     a.*,
-    //     vk.*,
-    //     v.*,
-    //     k.*
-    //   FROM vaultkeeps vk
-    //   JOIN accounts a ON a.id = vk.creatorId,
-    //   JOIN vaults v ON vk.vaultId = v.id,
-    //   JOIN keeps k ON vk.keepId = k.id
-    //   WHERE vk.creatorId = @accountId;";
-    //   return _db.Query<Profile, VaultKeep, Vault, Keep, VaultKeep>(sql, (prof, vaultkeep, keepId) =>
-    //   {
-    //     vaultkeep.Creator = prof;
-    //     vaultkeep.KeepId = KeepId;
-    //     return vaultkeep;
-    //   }, new { accountId }, splitOn: "id").ToList();
-    // }
-
     internal VaultKeep Create(VaultKeep newVaultKeep)
     {
       string sql = @"

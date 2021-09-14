@@ -25,6 +25,11 @@ namespace Keepr.Services
 //GetOneById
       internal Keep GetKeep(int id)
     {
+      Keep found = _keepRepo.GetById(id);
+      if (found == null)
+      {
+        throw new Exception("invalid Id");
+      }
       return _keepRepo.GetById(id);
     }
 
@@ -64,7 +69,7 @@ namespace Keepr.Services
       _keepRepo.Delete(keepId);
     }
 
-        internal IEnumerable<Keep> GetKeepByVaultId(int id)
+        internal List<VaultKeepViewModel> GetKeepByVaultId(int id)
         {
             return _keepRepo.GetKeepByVaultId(id);
         }

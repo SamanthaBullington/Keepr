@@ -22,12 +22,25 @@ namespace Keepr.Services
 //GetOneById
       internal Vault GetOneVault(int id)
     {
-      return _vaultRepo.GetById(id);
-    }
+      Vault found = _vaultRepo.GetById(id);
+      if (found == null)
+      {
+        throw new Exception("invalid Id");
+      }
+      return found;
+      }
+
+    //createVault
     internal Vault CreateVault(Vault newVault)
     {
       return _vaultRepo.Create(newVault);
     }
+
+    //GetAllVaultsByProfileId
+     internal List<Vault> GetVaultsByProfileId(string accountId)
+        {
+       return _vaultRepo.GetVaultsByProfileId(accountId);
+        }
 
     internal Vault Edit(Vault updatedVault)
     {
