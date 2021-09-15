@@ -93,6 +93,36 @@ namespace Keepr.Repositories
       return GetById(newKeep.Id);
     }
 
+    public void UpdateKeepCount(int id, int val){
+      string sql = @"
+       UPDATE keeps
+       SET 
+        keeps = keeps + @val
+      WHERE id = @id
+      ";
+      _db.Execute(sql, new{id, val});
+    }
+
+    public void UpdateViewCount(int id){
+      string sql = @"
+       UPDATE keeps
+       SET 
+        views = views + 1
+      WHERE id = @id
+      ";
+      _db.Execute(sql, new{id});
+    }
+
+    public void UpdateShareCount(int id){
+      string sql = @"
+       UPDATE keeps
+       SET 
+      shares = shares + 1
+      WHERE id = @id
+      ";
+      _db.Execute(sql, new{id});
+    }
+
     public Keep Edit(Keep updatedKeep)
     {
       string sql = @"

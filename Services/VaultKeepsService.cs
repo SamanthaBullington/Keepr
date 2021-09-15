@@ -9,34 +9,22 @@ namespace Keepr.Services
     private readonly VaultKeepsRepository _vkr;
     private readonly KeepsRepository _kr;
 
-    public VaultKeepsService(VaultKeepsRepository vkr, KeepsRepository kr)
+    private readonly VaultsRepository _vr;
+
+    public VaultKeepsService(VaultKeepsRepository vkr, KeepsRepository kr, VaultsRepository vr)
     {
       _vkr = vkr;
       _kr = kr;
+      _vr = vr;
     }
-
-    //     internal List<VaultKeep> Get()
-    // {
-    //   return _vkr.GetAll();
-    // }
-
-    // internal List<VaultKeep> GetByVaultId(int vaultId)
-    // {
-    //   return _vkr.GetAll(vaultId);
-    // }
-
-    // internal VaultKeep Get(int id)
-    // {
-    //   VaultKeep found = _vkr.GetById(id);
-    //   if (found == null)
-    //   {
-    //     throw new Exception("Invalid Id");
-    //   }
-    //   return found;
-    // }
 
     internal VaultKeep Create(VaultKeep newVaultKeep)
     {
+      Vault found = _vr.GetById(newVaultKeep.VaultId);
+      if (found.CreatorId != newVaultKeep.CreatorId){
+        throw new Exception("Not your vault");
+      }
+      // call to keeps repo and SET the keep.keeps += 1
       return _vkr.Create(newVaultKeep);
     }
 

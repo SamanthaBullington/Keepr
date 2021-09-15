@@ -69,8 +69,16 @@ namespace Keepr.Services
       _keepRepo.Delete(keepId);
     }
 
-        internal List<VaultKeepViewModel> GetKeepByVaultId(int id)
+        internal List<VaultKeepViewModel> GetKeepByVaultId(int id, string userId)
         {
+          Vault found = _vaultRepo.GetById(id);
+           if (found == null)
+      {
+        throw new Exception("invalid Id");
+      }
+      if (found.IsPrivate == true && userId != found.CreatorId){
+        throw new Exception("Not your vault");
+      }
             return _keepRepo.GetKeepByVaultId(id);
         }
         }

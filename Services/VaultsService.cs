@@ -20,12 +20,15 @@ namespace Keepr.Services
       return _vaultRepo.GetAll();
     }
 //GetOneById
-      internal Vault GetOneVault(int id)
+      internal Vault GetOneVault(int id, string userId=null)
     {
       Vault found = _vaultRepo.GetById(id);
       if (found == null)
       {
         throw new Exception("invalid Id");
+      }
+      if (found.IsPrivate == true && userId != found.CreatorId){
+        throw new Exception("Not your vault");
       }
       return found;
       }
@@ -44,7 +47,7 @@ namespace Keepr.Services
 
     internal Vault Edit(Vault updatedVault)
     {
-   Vault original = GetOneVault(updatedVault.Id);
+   Vault original = GetOneVault(updatedVault.Id, updatedVault.CreatorId);
       if (original.CreatorId != updatedVault.CreatorId)
       {
         throw new Exception("Not your vault to change");
@@ -59,7 +62,7 @@ namespace Keepr.Services
     }
     internal void Delete(int vaultId, string userId)
     {
-      Vault toDelete = GetOneVault(vaultId);
+      Vault toDelete = GetOneVault(vaultId, userId);
       if (toDelete.CreatorId != userId)
       {
         throw new Exception("This is not your vault");
