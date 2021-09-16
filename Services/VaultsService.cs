@@ -45,6 +45,12 @@ namespace Keepr.Services
        return _vaultRepo.GetVaultsByProfileId(accountId);
         }
 
+    internal List<Vault> GetVaultsByAccountId(string accountId)
+        {
+       return _vaultRepo.GetVaultsByAccountId(accountId);
+        }
+
+
     internal Vault Edit(Vault updatedVault)
     {
    Vault original = GetOneVault(updatedVault.Id, updatedVault.CreatorId);

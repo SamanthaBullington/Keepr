@@ -64,6 +64,22 @@ namespace Keepr.Repositories
       }, new { id }, splitOn: "id").ToList();
     }
 
+    internal List<Vault> GetVaultsByAccountId(string id)
+    {
+      string sql = @"
+      SELECT 
+      v.*,
+      a.*
+      FROM vaults v
+      JOIN accounts a ON v.creatorId = a.id
+      WHERE v.creatorId = @id;";
+      return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
+      {
+        vault.Creator = profile;
+        return vault;
+      }, new { id }, splitOn: "id").ToList();
+    }
+
     public Vault Create(Vault newVault)
     {
       var sql = @"

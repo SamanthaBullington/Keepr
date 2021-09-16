@@ -38,6 +38,12 @@ namespace Keepr.Services
         {
        return _keepRepo.GetKeepsByProfileId(accountId);
         }
+
+//GetKeepsByaccountId
+internal List<Keep> GetKeepsByAccountId(string accountId)
+        {
+       return _keepRepo.GetKeepsByAccountId(accountId);
+        }
     //create
     internal Keep CreateKeep(Keep newKeep)
     {

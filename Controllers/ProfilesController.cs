@@ -52,7 +52,7 @@ namespace Keepr.Controllers
     }
 
      [HttpGet("{id}/vaults")]
-    public async Task<ActionResult<Account>> GetVaultsByProfile(string id)
+    public async Task<ActionResult<List<Vault>>> GetVaultsByProfile(string id)
     {
       try
       {
