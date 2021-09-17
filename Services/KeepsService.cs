@@ -30,6 +30,8 @@ namespace Keepr.Services
       {
         throw new Exception("invalid Id");
       }
+      _keepRepo.UpdateViewCount(id);
+      found.Keeps++;
       return _keepRepo.GetById(id);
     }
 

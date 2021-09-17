@@ -24,6 +24,7 @@ namespace Keepr.Services
       if (found.CreatorId != newVaultKeep.CreatorId){
         throw new Exception("Not your vault");
       }
+      _kr.UpdateKeepCount(newVaultKeep.KeepId, 1);
       // call to keeps repo and SET the keep.keeps += 1
       return _vkr.Create(newVaultKeep);
     }
@@ -46,6 +47,7 @@ namespace Keepr.Services
         throw new Exception("Thats not your restaurant");
       }
       _vkr.Delete(vaultKeepId);
+      _kr.UpdateKeepCount(toDelete.KeepId, -1);
       return "Deleted";
     }
   }

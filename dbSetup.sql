@@ -14,9 +14,9 @@ CREATE TABLE IF NOT EXISTS keeps(
   creatorId VARCHAR(255) NOT NULL COMMENT 'Keep creatorId',
   img varchar(255) COMMENT 'Keep Image Url',
   description VARCHAR(255) COMMENT 'Keep Description',
-  views int COMMENT 'Keep views',
-  shares int COMMENT 'Keep shares',
-  keeps int COMMENT 'Times keeps added to vaults',
+  views int NOT NULL DEFAULT 0 COMMENT  'Keep views',
+  shares int NOT NULL DEFAULT 0 COMMENT  'Keep shares',
+  keeps int NOT NULL DEFAULT 0 COMMENT  'Times keeps added to vaults',
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
 CREATE TABLE IF NOT EXISTS vaults(
